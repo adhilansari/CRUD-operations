@@ -1,15 +1,18 @@
 import express from 'express'
-import dotenv from 'dotenv'
+import { photos } from './routers/photo.route';
 import { dbConnect } from './configs/database.config';
-import route from './routers/photo.route';
 dbConnect()
 
-const app = express()
-app.use(express.json);
 
-app.use('http://localhost:5000/api/v1/',route)
+const app=express();
+app.use(express.json())
 
+
+// Routes
+app.use('/api/v1/photos',photos)
+
+// Serving express app 
 const port=5000
-const server = app.listen(port,()=>{
+ app.listen(port,()=>{
     console.log("Website Served on http://localhost:"+port);
-});
+});     
