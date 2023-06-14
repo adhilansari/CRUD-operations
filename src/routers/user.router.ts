@@ -3,7 +3,7 @@ import { IUser, UserModel } from "../models/user.model";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
-import verfyToken from "../middlewares/verifyToken.mid";
+import verifyToken from "../middlewares/verifyToken.mid";
 dotenv.config()
 
 const router:Router = Router();
@@ -120,7 +120,7 @@ async(req:Request,res:Response)=>{
 });
 
 /** Check User Token */
-router.get('/token',verfyToken,
+router.get('/token',verifyToken,
 async(req:any,res:Response)=>{
     try {
         res.status(200).json(req.user)
