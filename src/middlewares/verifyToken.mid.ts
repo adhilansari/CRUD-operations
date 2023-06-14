@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { verify } from "jsonwebtoken";
 
- const verfyToken = async(req:any,res:Response,next:NextFunction)=>{
+ const verifyToken = async(req:any,res:Response,next:NextFunction)=>{
     try {
         const token:string = req.headers.token!
         const decodeUser = verify(token,process.env.JWT_SECRET_KEY!)
@@ -12,4 +12,4 @@ import { verify } from "jsonwebtoken";
         res.status(404).send({ message: "token is not verified", error });
     }
 }
-export default verfyToken
+export default verifyToken
