@@ -1,5 +1,5 @@
 import { Response, Request, Router } from "express";
-import { photoModel } from "../models/photos.model";
+import { IPhoto, photoModel } from "../models/photos.model";
 
 const router = Router();
 
@@ -8,17 +8,17 @@ router.post('/add',
     async (req: Request, res: Response) => {
         try {
             const { name, description, mime_type, media_metadata } = req.body;
-            const photo = new photoModel({
+            const photo:IPhoto =await new photoModel({
                 name,
                 description,
                 mime_type,
                 media_metadata
-            })
-            const result = await photo.save()
-            if (!result) return res.status(400).json('Unable to add photo')
+            }).save();
+            
+            if (!photo) return res.status(400).json('Unable to add photo')
             res.status(200).json({
                 message: 'Success',
-                data: result
+                data: photo
             });
 
         } catch (error) {
@@ -78,4 +78,4 @@ async(req:Request,res:Response)=>{
 })
 
 
-export const photos = router
+export const photoRouter = router
