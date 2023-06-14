@@ -1,5 +1,5 @@
 import { Response, Request, Router } from "express";
-import { IPhoto, photoModel } from "../models/photos.model";
+import { IPhoto, MimeType, photoModel } from "../models/photos.model";
 
 const router = Router();
 

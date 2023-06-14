@@ -1,5 +1,5 @@
 import { configDotenv } from 'dotenv';
-import  {connect,ConnectOptions} from 'mongoose';
+import  {connect} from 'mongoose';
 configDotenv()
 export const dbConnect=()=>{
     connect(process.env.MONGO_URL!).then(

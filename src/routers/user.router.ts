@@ -3,6 +3,7 @@ import { IUser, UserModel } from "../models/user.model";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import verfyToken from "../middlewares/verifyToken.mid";
 dotenv.config()
 
 const router:Router = Router();
@@ -63,9 +64,7 @@ async(req:Request,res:Response)=>{
         let {firstName,lastName,email,password,profilePhoto}= req.body
         if(password){
         const encryptedPassword = await bcrypt.hash(password,10)
-        password=encryptedPassword
-        console.log(password);
-        
+        password=encryptedPassword        
         }
         const updatedUser=await UserModel.findByIdAndUpdate(req.params.id,{
             firstName,
@@ -104,7 +103,7 @@ async(req:Request,res:Response)=>{
 });
 
 /** Get All Users */
-router.get('/',
+router.get('/all',
 async(req:Request,res:Response)=>{
     const users= await UserModel.find()
    try {
@@ -121,6 +120,16 @@ async(req:Request,res:Response)=>{
 });
 
 /** Check User Token */
+router.get('/token',verfyToken,
+async(req:any,res:Response)=>{
+    try {
+        res.status(200).json(req.user)
+    } catch (error) {
+        console.log(error);
+        res.status(401|500).json(error)
+    }
+})
+
 
 
 export const userRouter = router
@@ -131,8 +140,6 @@ const generateTokenResponse = (user:IUser)=>{
     },process.env.JWT_SECRET_KEY!,{
         expiresIn:'1m'
     });
-    user.token=token;
-    console.log(user);
-    
+    user.token=token;    
     return user
 }

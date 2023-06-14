@@ -1,7 +1,7 @@
 import { Schema,model } from "mongoose"
 
 /**Enum for MIME types */
-enum MimeType {
+export enum MimeType {
     JPEG=1,
     JPG,
     PNG
